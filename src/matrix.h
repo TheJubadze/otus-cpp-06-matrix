@@ -1,5 +1,3 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "google-explicit-constructor"
 #pragma once
 
 #include <map>
@@ -74,5 +72,3 @@ int Matrix<T, defaultValue>::size() const {
                            });
 }
 //==========================================================================================
-
-#pragma clang diagnostic pop
