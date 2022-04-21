@@ -44,7 +44,7 @@ int KeyValuePair<T, defaultValue>::size() const {
     return std::accumulate(std::begin(m_Map), std::end(m_Map), 0,
                            [](const std::size_t previous,
                               const std::pair<const int, Element<T, defaultValue>> &p) {
-                               return previous + p.second == defaultValue ? 0 : 1;
+                               return previous + (p.second == defaultValue ? 0 : 1);
                            });
 }
 //==========================================================================================
