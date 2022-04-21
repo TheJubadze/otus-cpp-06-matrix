@@ -26,7 +26,7 @@ private:
 template<typename T, T defaultValue>
 class KeyValuePair {
 public:
-    [[nodiscard]] int Size() const;
+    [[nodiscard]] int size() const;
     Element<T, defaultValue> &operator[](int);
 
 private:
@@ -40,7 +40,7 @@ Element<T, defaultValue> &KeyValuePair<T, defaultValue>::operator[](int index) {
 }
 
 template<typename T, T defaultValue>
-int KeyValuePair<T, defaultValue>::Size() const {
+int KeyValuePair<T, defaultValue>::size() const {
     return std::accumulate(std::begin(m_Map), std::end(m_Map), 0,
                            [](const std::size_t previous,
                               const std::pair<const int, Element<T, defaultValue>> &p) {
@@ -53,7 +53,7 @@ int KeyValuePair<T, defaultValue>::Size() const {
 template<typename T, T defaultValue>
 class Matrix {
 public:
-    [[nodiscard]] int Size() const;
+    [[nodiscard]] int size() const;
     KeyValuePair<T, defaultValue> &operator[](int);
 
 private:
@@ -66,11 +66,11 @@ KeyValuePair<T, defaultValue> &Matrix<T, defaultValue>::operator[](int index) {
     return m_Matrix[index];
 }
 template<typename T, T defaultValue>
-int Matrix<T, defaultValue>::Size() const {
+int Matrix<T, defaultValue>::size() const {
     return std::accumulate(std::begin(m_Matrix), std::end(m_Matrix), 0,
                            [](const std::size_t previous,
                               const std::pair<const int, KeyValuePair<T, defaultValue>> &p) {
-                               return previous + p.second.Size();
+                               return previous + p.second.size();
                            });
 }
 //==========================================================================================

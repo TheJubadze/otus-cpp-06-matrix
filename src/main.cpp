@@ -5,15 +5,15 @@ int main(int, char **) {
     Log::Log::Init();
     MY_INFO("========================================");
 
-    auto mat = Matrix<int, -55>();
-    mat[100][100] = 458;
-
-    MY_INFO(mat[100][100]);
-    MY_INFO(mat.Size());
-    MY_INFO(mat[0][0]);
-    MY_INFO(mat[1][0]);
-    MY_INFO(mat[23][0]);
-    MY_INFO(mat.Size());
+    // бесконечная матрица int заполнена значениями -1
+    Matrix<int, -1> matrix;
+    assert(matrix.size() == 0); // все ячейки свободны
+    auto a = matrix[0][0];
+    assert(a == -1);
+    assert(matrix.size() == 0);
+    matrix[100][100] = 314;
+    assert(matrix[100][100] == 314);
+    assert(matrix.size() == 1);
 
     return 0;
 }
