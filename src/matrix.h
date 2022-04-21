@@ -1,6 +1,9 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "google-explicit-constructor"
 #pragma once
 
 #include <map>
+#include <numeric>
 
 //============================================= Element =============================================
 template<typename T, T defaultValue>
@@ -23,6 +26,7 @@ private:
 template<typename T, T defaultValue>
 class KeyValuePair {
 public:
+    [[nodiscard]] int Size() const;
     Element<T, defaultValue> &operator[](int);
 
 private:
@@ -32,9 +36,16 @@ private:
 
 template<typename T, T defaultValue>
 Element<T, defaultValue> &KeyValuePair<T, defaultValue>::operator[](int index) {
-    return m_Map.contains(index)
-           ? m_Map[index]
-           : m_EmptyElement;
+    return m_Map[index];
+}
+
+template<typename T, T defaultValue>
+int KeyValuePair<T, defaultValue>::Size() const {
+    return std::accumulate(std::begin(m_Map), std::end(m_Map), 0,
+                           [](const std::size_t previous,
+                              const std::pair<const int, Element<T, defaultValue>> &p) {
+                               return previous + p.second == defaultValue ? 0 : 1;
+                           });
 }
 //==========================================================================================
 
@@ -42,6 +53,7 @@ Element<T, defaultValue> &KeyValuePair<T, defaultValue>::operator[](int index) {
 template<typename T, T defaultValue>
 class Matrix {
 public:
+    [[nodiscard]] int Size() const;
     KeyValuePair<T, defaultValue> &operator[](int);
 
 private:
@@ -51,8 +63,16 @@ private:
 
 template<typename T, T defaultValue>
 KeyValuePair<T, defaultValue> &Matrix<T, defaultValue>::operator[](int index) {
-    return m_Matrix.contains(index)
-           ? m_Matrix[index]
-           : m_EmptyKeyValuePair;
+    return m_Matrix[index];
+}
+template<typename T, T defaultValue>
+int Matrix<T, defaultValue>::Size() const {
+    return std::accumulate(std::begin(m_Matrix), std::end(m_Matrix), 0,
+                           [](const std::size_t previous,
+                              const std::pair<const int, KeyValuePair<T, defaultValue>> &p) {
+                               return previous + p.second.Size();
+                           });
 }
 //==========================================================================================
+
+#pragma clang diagnostic pop
