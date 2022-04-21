@@ -10,12 +10,12 @@ configure_file(version.h.in version.h)
 add_executable(${PROJECT_NAME}
         main.cpp
         Log.cpp
-        )
+        matrix.h)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/../spdlog/include)
 
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
 IF (WIN32)
     SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/dev/boost_1_77_0")
